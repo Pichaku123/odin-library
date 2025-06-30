@@ -6,6 +6,7 @@ const test=document.querySelector(".test");
 const container=document.querySelector(".container");
 const noOfCards=library.length;
 let bookNo=1;
+const available=document.querySelector(".available");
 
 function Book(author, title, pages, read){
     this.author=author;
@@ -53,8 +54,12 @@ modal.addEventListener("close", () => {
 
     const card=document.createElement("div");
     card.classList.add("card");
-    displayBook(library, card, bookNo++);
+    displayBook(library, card, bookNo);
     container.appendChild(card);
+
+    available.textContent=`Available= ${bookNo}`;
+
+    bookNo++;
 
 });
 
