@@ -8,6 +8,34 @@
 </head>
 <body>
     <button id="newbook">New Book</button>
+    <dialog id="modal">
+        <form method="dialog">
+            <div class="formrow">
+                <label for="author">Author- </label>
+                <input type="text" name="author" id="author">
+            </div>
+            <div class="formrow">
+                <label for="title">Title- </label>
+                <input type="text" name="title" id="title">
+            </div>
+            <div class="formrow">
+                <label for="pages">Pages-</label>
+                <input type="number" name="pages" id="pages">
+            </div>
+            <div class="formrow">
+                <label for="read">Read or not- </label>
+                <select>
+                    <option value="default">Choose...</option>
+                    <option>Yes</option>
+                    <option>No</option>
+                </select>
+            </div>
+            <button id="submit">Submit</button>
+        </form>
+    </dialog>
+
+    <div class="test"></div>
+
     <div class="container">
 
     </div>

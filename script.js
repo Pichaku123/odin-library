@@ -1,4 +1,11 @@
 const library=[];
+const newBook=document.querySelector("#newbook");
+const modal=document.querySelector("#modal");
+const submit=document.querySelector("#submit");
+const test=document.querySelector(".test");
+const container=document.querySelector(".container");
+const noOfCards=library.length;
+let bookNo=1;
 
 function Book(author, title, pages, read){
     this.author=author;
@@ -13,32 +20,43 @@ function addToLib(author, title, pages, read){
     library.push(book);
 }
 
-function displayBook(library, card, i){
+function displayBook(library, card, bookNo){
 
-        card.innerHTML+=`Book No. ${i+1}<br>
-        Author- ${library[i].author}<br>
-        Title- ${library[i].title}<br>
-        Pages- ${library[i].pages}<br>
-        Read or not- ${library[i].read}<br>
-        ID-${library[i].id}<br><br>`;
+        const index=bookNo-1;
+        card.innerHTML+=`Book No. ${bookNo}<br>
+        Author- ${library[index].author}<br>
+        Title- ${library[index].title}<br>
+        Pages- ${library[index].pages}<br>
+        Read or not- ${library[index].read}<br>
+        ID-${library[index].id}<br><br>`;
     
 }
 
-addToLib("me", "mybook", 200, true);
-addToLib("someone else", "theirbook", 500, false);
-addToLib("some third person", "whatever", 10, true);
-addToLib("balwant", "tiger zinda hai", 44, true);
+newBook.addEventListener("click", () => {
+    modal.showModal();
+});
 
-const container=document.querySelector(".container");
-const noOfCards=library.length;
+submit.addEventListener("click", (e) => {
+    e.preventDefault();     //stops it from submitting and reloading
+    modal.close(modal.returnValue);
+});
 
-library.reduce((bookNo, book) => {
+modal.addEventListener("close", () => {
+    const author=document.querySelector("#author").value;
+    const title=document.querySelector("#title").value;
+    const pages=document.querySelector("#pages").value;
+    const readValue=document.querySelector("select").value;
+
+    const read=(readValue=="Yes");  //true/false
+
+    addToLib(author, title, pages, read);
+
     const card=document.createElement("div");
     card.classList.add("card");
-    displayBook(library, card, bookNo);
+    displayBook(library, card, bookNo++);
     container.appendChild(card);
-    return ++bookNo;
-}, 0);
+
+});
 
 console.log(library);
 
