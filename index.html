@@ -4,11 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="style.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
     <title>Document</title>
 </head>
 <body>
-    <button id="newbook">New Book</button>
-    <div class="available"></div>
+
+    <div id="header">
+        <p class="title">Personal Library</p>
+    </div>
+
+    <div id="sidebar">
+        <button id="newbook">New Book</button>
+        <div class="available">Total Books= 0</div>
+    </div>
+    
     <dialog id="modal">
         <form method="dialog">
             <div class="formrow">
@@ -35,11 +44,12 @@
         </form>
     </dialog>
 
-    <div class="test"></div>
+    <div class="container"></div>
 
-    <div class="container">
-
+    <div id="footer">
+        <p>Copyright &copy; 2025 Pichaku123</p>
     </div>
+
     <script src="script.js"></script>
 </body>
 </html>

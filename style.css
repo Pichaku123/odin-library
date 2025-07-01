@@ -1,15 +1,136 @@
-.container{
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&family=Edu+VIC+WA+NT+Hand:wght@400..700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter';
+}
+
+body{
+    display: grid;
+    grid-template-columns: 1fr 5fr;
+    grid-template-rows: repeat(6, 1fr);
+    gap: 2%;
+    padding: 1% 2%;
+    height: 100vh;
+    /* background-color: #F3e4f5; */
+    background-color: #ffeef2;
+}
+
+body > *{
+    border-radius: 1rem;
+    box-shadow: 1px 1px 3px 2px gray;
+}
+
+#header{
+    grid-column: 1/3;
+    grid-row: 1/2;
+    font-size: 3em;
+    padding: 0.5em;
     display: flex;
-    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    background-color: #F3e4f5;
+}
+
+#sidebar{
+    grid-row: 2/6;
+    font-size: 1.5em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1em;
+    background-color: #F3e4f5;
+}
+
+#newbook{
+    font-size: 1em;
+    padding: 0.5em 0.8em;
+    border-radius: 0.5em;
+    box-shadow: 2px 2px 4px 1px gray;
+    border: 1px solid gray;
+    background-color: #c9e4de;
+}
+
+.container{
+    grid-row: 2/6;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(50px, 30%));
+    grid-template-rows: 1fr 1fr;
+    grid-auto-rows: 1fr;
+    gap: 2em;
+    overflow: auto;
+    padding: 2em;
+    background-color: #c8ceee;
+}
+
+#footer{
+    grid-column: 1/3;
+    grid-row: 6/7;
+    font-size: 1.5em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #F3e4f5;
 }
 
 .card{
-    border: 2px solid black;
-    width: 20%;
-    margin: 1rem;
-    padding: 2% 5%;
+    padding: 1em 2em;
+    border-radius: 0.5em;
+    box-shadow: 2px 2px 4px 3px gray;
+    background-color:  #faedcb;
 }
 
-.text{
-    border: 2px solid black;
+.card-btn{
+    display: flex;
+    gap: 1em;
 }
+.card-btn > button{
+    padding: 0.5em 1em;
+    border-radius: 0.5em;
+    border: none;
+}
+
+.remove{
+    background-color: #ff3333;
+    color: #f7f7f7;
+}
+
+.read-toggle{
+    background-color: orange;
+}
+
+
+#modal{
+    padding: 2em;
+    margin: 20vh auto;
+    border-radius: 1em;
+    border: none;
+    box-shadow: 5px 5px 5px gray;
+    background-color: #f7f7f7;
+}
+
+#modal::backdrop{
+    background-color: #b3b3b3;
+    opacity: 50%;
+}
+
+#modal .formrow{
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    font-size: 1.5em;
+    gap: 2em;
+    margin-bottom: 1em;
+}
+
+#modal #submit{
+    padding: 0.8em 2em;
+    font-size: 1.2em;
+    border-radius: 0.8em;
+    background-color: #c9e4de;
+}
+
+
+
