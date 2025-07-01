@@ -20,14 +20,13 @@ function addToLib(author, title, pages, read){
     library.push(book);
 }
 
-function displayBook(library, card, bookNo){
+function displayBook(library, card, position){
 
-        const index=bookNo-1;
-        card.innerHTML+=`Author- ${library[index].author}<br>
-        Title- ${library[index].title}<br>
-        Pages- ${library[index].pages}<br>
-        Read or not- ${library[index].read}<br>
-        ID-${library[index].id}<br><br>`;
+        card.innerHTML=`Author- ${library[position].author}<br>
+        Title- ${library[position].title}<br>
+        Pages- ${library[position].pages}<br>
+        Read or not- ${library[position].read}<br>
+        ID-${library[position].id}<br><br>`;
     
 }
 
@@ -46,7 +45,7 @@ modal.addEventListener("close", () => {
     const pages=document.querySelector("#pages").value;
     const readValue=document.querySelector("select").value;
 
-    const read=(readValue=="Yes");  //true/false
+    let read=(readValue=="Yes");  //true/false
 
     if(!author || !title || !pages || readValue=="default"){
         alert("Please fill all the fields.");
@@ -60,13 +59,22 @@ modal.addEventListener("close", () => {
     const card=document.createElement("div");   //for overall card
     card.classList.add("card");
 
+    const text=document.createElement("div");   //for text contents/details
+    text.classList.add("text");
+
     const remove=document.createElement("button");  //delete button
     remove.classList.add("remove");
     remove.textContent="Remove Entry";
 
-    displayBook(library, card, library.length);     //shows the card with book details
+    const readToggle=document.createElement("button");
+    readToggle.classList.add("read-toggle");
+    readToggle.textContent="Toggle Read Status";
+
+    displayBook(library, text, library.length-1);     //shows the card with book details
     container.appendChild(card);
+    card.appendChild(text);
     card.appendChild(remove);
+    card.appendChild(readToggle);
 
     //adding the event listener to every book, cuz using it outside means it's 
     //only adding it to the 1st remove button for the first card.
@@ -80,6 +88,18 @@ modal.addEventListener("close", () => {
         });
         library.splice(bookPosition, 1);
         available.textContent=`Available= ${library.length}`;
+    });
+
+    //same as remove, we need to add it to every card
+
+    readToggle.addEventListener("click", () => {
+        //to find index of current book
+        let bookPosition=library.findIndex((item) => {
+            return item.id === currBook.id;
+        });
+        library[bookPosition].read=!library[bookPosition].read;
+        console.log(library[bookPosition].read);
+        displayBook(library, text, bookPosition);
     });
 
     available.textContent=`Available= ${library.length}`;

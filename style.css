@@ -2,9 +2,14 @@
     display: flex;
     flex-wrap: wrap;
 }
+
 .card{
     border: 2px solid black;
     width: 20%;
     margin: 1rem;
     padding: 2% 5%;
+}
+
+.text{
+    border: 2px solid black;
 }
