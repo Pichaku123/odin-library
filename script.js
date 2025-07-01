@@ -4,8 +4,7 @@ const modal=document.querySelector("#modal");
 const submit=document.querySelector("#submit");
 const test=document.querySelector(".test");
 const container=document.querySelector(".container");
-const noOfCards=library.length;
-let bookNo=1;
+const form=document.querySelector("form");
 const available=document.querySelector(".available");
 
 function Book(author, title, pages, read){
@@ -24,8 +23,7 @@ function addToLib(author, title, pages, read){
 function displayBook(library, card, bookNo){
 
         const index=bookNo-1;
-        card.innerHTML+=`Book No. ${bookNo}<br>
-        Author- ${library[index].author}<br>
+        card.innerHTML+=`Author- ${library[index].author}<br>
         Title- ${library[index].title}<br>
         Pages- ${library[index].pages}<br>
         Read or not- ${library[index].read}<br>
@@ -50,16 +48,43 @@ modal.addEventListener("close", () => {
 
     const read=(readValue=="Yes");  //true/false
 
+    if(!author || !title || !pages || readValue=="default"){
+        alert("Please fill all the fields.");
+        return;
+    }
+
     addToLib(author, title, pages, read);
 
-    const card=document.createElement("div");
+    const currBook=library[library.length-1];
+
+    const card=document.createElement("div");   //for overall card
     card.classList.add("card");
-    displayBook(library, card, bookNo);
+
+    const remove=document.createElement("button");  //delete button
+    remove.classList.add("remove");
+    remove.textContent="Remove Entry";
+
+    displayBook(library, card, library.length);     //shows the card with book details
     container.appendChild(card);
+    card.appendChild(remove);
 
-    available.textContent=`Available= ${bookNo}`;
+    //adding the event listener to every book, cuz using it outside means it's 
+    //only adding it to the 1st remove button for the first card.
+    //each book/card needs its own event listener for the remove button, sooo
+    
+    remove.addEventListener("click", () => {
+        container.removeChild(card);
+        //removing element from library
+        let bookPosition=library.findIndex((item) => {
+            return item.id === currBook.id;
+        });
+        library.splice(bookPosition, 1);
+        available.textContent=`Available= ${library.length}`;
+    });
 
-    bookNo++;
+    available.textContent=`Available= ${library.length}`;
+
+    form.reset();
 
 });
 
