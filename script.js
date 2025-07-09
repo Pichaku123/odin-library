@@ -20,7 +20,7 @@ const libraryItems= () =>  {
     
     function readToggle(currBook){
         let bookPosition= library.findIndex((item) => {
-            item.id == currBook.id;
+            return item.id == currBook.id;
         })
         currBook.read = !currBook.read;
         console.log("toggled");
@@ -28,7 +28,7 @@ const libraryItems= () =>  {
 
     function removeBook(currID){
         let bookPosition= library.findIndex((item) => {
-            item.id == currID;
+            return item.id == currID;
         })
         library.splice(bookPosition, 1);
         console.log("removed book");
@@ -39,7 +39,7 @@ const libraryItems= () =>  {
     return {addToLib, readToggle, removeBook, getBooks};
 };
 
-const displayController= () => {
+const displayController= (function() {
     const newBook=document.querySelector("#newbook");
     const modal=document.querySelector("#modal");
     const submit=document.querySelector("#submit");
@@ -105,8 +105,51 @@ const displayController= () => {
         });
         available.textContent= `Total Books- ${library.length}`;
     }
-    
-    displayBook(libraryContent.addToLib("me", "mine", 200, true));
-}
 
-displayController();
+    (function makeModal(){
+        newBook.addEventListener("click", () => {
+            modal.showModal();
+        })
+
+        submit.addEventListener("click", (e) => {
+            e.preventDefault();     //stops it from submitting and reloading
+            modal.close(modal.returnValue);
+        });
+
+        modal.addEventListener("close", () => {
+            const author=document.querySelector("#author").value;
+            const title=document.querySelector("#title").value;
+            const pages=document.querySelector("#pages").value;
+            const readValue=document.querySelector("select").value;
+            const read=(readValue === "Yes");
+
+            if(!author || !title || !pages || readValue=="default"){
+                alert("Please fill all the fields.");
+                return;
+            }
+
+            const currBook=libraryContent.addToLib(author, title, pages, read);
+
+            displayBook(currBook);
+            available.textContent=`Total Books= ${library.length}`;
+            loadLibrary();
+
+            form.reset();
+            console.log(library);   
+        });
+    })();
+    
+    //dummy data for testing-
+    libraryContent.addToLib("Hajime Isayama", "Attack on Titan", 34 * 20, true);
+    libraryContent.addToLib("Eiichiro Oda", "One Piece", 100 * 20, false);
+    libraryContent.addToLib("Tite Kubo", "Bleach", 74 * 20, false);
+    libraryContent.addToLib("Masashi Kishimoto", "Naruto", 72 * 20, true);
+    libraryContent.addToLib("Koyoharu Gotōge", "Demon Slayer", 23 * 20, true);
+    libraryContent.addToLib("Yūto Tsukuda & Shun Saeki", "Food Wars", 35 * 20, false);
+    libraryContent.addToLib("Naoki Urasawa", "Monster", 18 * 200, false);
+    libraryContent.addToLib("Takehiko Inoue", "Vagabond", 37 * 20, false);
+    libraryContent.addToLib("Tatsuki Fujimoto", "Chainsaw Man", 20 * 20, true);
+    libraryContent.addToLib("Haruo Yamaguchi", "Jujutsu Kaisen", 24 * 20, true);
+    loadLibrary();
+    
+})();
