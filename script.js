@@ -18,18 +18,20 @@ const libraryItems= () =>  {
         return book;
     }
     
-    function readToggle(ID){
+    function readToggle(currBook){
         let bookPosition= library.findIndex((item) => {
-            item.id == currID;
+            item.id == currBook.id;
         })
-        library[bookPosition].read = !library[bookPosition].read;
+        currBook.read = !currBook.read;
+        console.log("toggled");
     }
 
-    function removeBook(ID){
+    function removeBook(currID){
         let bookPosition= library.findIndex((item) => {
             item.id == currID;
         })
         library.splice(bookPosition, 1);
+        console.log("removed book");
     }
 
     let getBooks = () => library;
@@ -79,10 +81,31 @@ const displayController= () => {
         Read or not- ${(library[position].read) ? "Read" : "Not read"}<br>
         ID- ${library[position].id}<br><br>`;
 
+        remove.addEventListener("click", () => {
+            libraryContent.removeBook(currBook.id);
+            loadLibrary();  //reload library after removal
+        });
+        
+        readToggle.addEventListener("click", () => {
+            libraryContent.readToggle(currBook);
+            loadLibrary();      //reload after toggle
+        });
+
         container.appendChild(card);
         card.appendChild(text);
         card.appendChild(cardBtn);
+        available.textContent= `Total Books- ${library.length}`;
+        
     }
+
+    function loadLibrary(){
+        container.innerHTML="";
+        library.forEach((book) => {
+            displayBook(book);
+        });
+        available.textContent= `Total Books- ${library.length}`;
+    }
+    
     displayBook(libraryContent.addToLib("me", "mine", 200, true));
 }
 
